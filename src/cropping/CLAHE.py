@@ -34,7 +34,7 @@ def CLAHE(input_data_folder):
         #heatmap = cv2.applyColorMap(bgr, cv2.COLORMAP_HOT)
         heatmap = cv2.applyColorMap(bgr, cv2.COLORMAP_OCEAN)
         heatmap = np.array(heatmap)
-        img = Image.fromarray(heatmap, 'RGB')
+        img = Image.fromarray(heatmap)
         img.save(input_data_folder+'/'+files[i], bits=16)
 
 if __name__ == "__main__":
