@@ -20,6 +20,11 @@ IMAGE_PREDICTIONS_PATH='sample_output/image_predictions.csv'
 IMAGEHEATMAPS_PREDICTIONS_PATH='sample_output/imageheatmaps_predictions.csv'
 export PYTHONPATH=$(pwd):$PYTHONPATH
 
+
+echo 'Stage 1A: Apply Contrast Limited Adaptive Histogram Equalization'
+python src/cropping/CLAHE.py \
+    --input-data-folder $DATA_FOLDER
+
 echo 'Stage 1: Crop Mammograms'
 python src/cropping/crop_mammogram.py \
     --input-data-folder $DATA_FOLDER \
@@ -27,10 +32,6 @@ python src/cropping/crop_mammogram.py \
     --exam-list-path $INITIAL_EXAM_LIST_PATH  \
     --cropped-exam-list-path $CROPPED_EXAM_LIST_PATH  \
     --num-processes $NUM_PROCESSES
-
-echo 'Stage 1A: Apply Contrast Limited Adaptive Histogram Equalization'
-python src/cropping/CLAHE.py \
-    --input-data-folder $CROPPED_IMAGE_PATH
 
 echo 'Stage 2: Extract Centers'
 python src/optimal_centers/get_optimal_centers.py \
