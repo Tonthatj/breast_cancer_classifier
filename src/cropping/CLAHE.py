@@ -8,7 +8,7 @@ import pandas as pd
 from PIL import Image
 import numpy as np
 import cv2
-import os
+import imageio
 
 def CLAHE(input_data_folder):
     # r=root, d=directories, f = files
