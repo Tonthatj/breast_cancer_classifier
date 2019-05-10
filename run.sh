@@ -21,7 +21,7 @@ IMAGEHEATMAPS_PREDICTIONS_PATH='sample_output/imageheatmaps_predictions.csv'
 export PYTHONPATH=$(pwd):$PYTHONPATH
 
 echo 'Stage 1: Crop Mammograms'
-python3.7 src/cropping/crop_mammogram.py \
+python src/cropping/crop_mammogram.py \
     --input-data-folder $DATA_FOLDER \
     --output-data-folder $CROPPED_IMAGE_PATH \
     --exam-list-path $INITIAL_EXAM_LIST_PATH  \
@@ -29,14 +29,14 @@ python3.7 src/cropping/crop_mammogram.py \
     --num-processes $NUM_PROCESSES
 
 echo 'Stage 2: Extract Centers'
-python3.7 src/optimal_centers/get_optimal_centers.py \
+python src/optimal_centers/get_optimal_centers.py \
     --cropped-exam-list-path $CROPPED_EXAM_LIST_PATH \
     --data-prefix $CROPPED_IMAGE_PATH \
     --output-exam-list-path $EXAM_LIST_PATH \
     --num-processes $NUM_PROCESSES
 
 echo 'Stage 3: Generate Heatmaps'
-python3.7 src/heatmaps/run_producer.py \
+python src/heatmaps/run_producer.py \
     --model-path $PATCH_MODEL_PATH \
     --data-path $EXAM_LIST_PATH \
     --image-path $CROPPED_IMAGE_PATH \
@@ -46,7 +46,7 @@ python3.7 src/heatmaps/run_producer.py \
     --gpu-number $GPU_NUMBER
 
 echo 'Stage 4a: Run Classifier (Image)'
-python3.7 src/modeling/run_model.py \
+python src/modeling/run_model.py \
     --model-path $IMAGE_MODEL_PATH \
     --data-path $EXAM_LIST_PATH \
     --image-path $CROPPED_IMAGE_PATH \
@@ -57,7 +57,7 @@ python3.7 src/modeling/run_model.py \
     --gpu-number $GPU_NUMBER
 
 echo 'Stage 4b: Run Classifier (Image+Heatmaps)'
-python3.7 src/modeling/run_model.py \
+python src/modeling/run_model.py \
     --model-path $IMAGEHEATMAPS_MODEL_PATH \
     --data-path $EXAM_LIST_PATH \
     --image-path $CROPPED_IMAGE_PATH \
