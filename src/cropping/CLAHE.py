@@ -77,7 +77,7 @@ def CLAHE(input_data_folder):
         #heatmap = cv2.applyColorMap(bgr, cv2.COLORMAP_HOT)
         #heatmap = cv2.applyColorMap(bgr, cv2.COLORMAP_OCEAN)
         #heatmap = np.array(heatmap)
-        save_hdr(input_data_folder+'/'+files[i], bgr.astype(np.uint16), options.dimension, gray=options.gray)
+        save_hdr(input_data_folder+'/'+files[i], bgr.astype(np.uint16), gray=options.gray)
  
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Apply CLAHE and CMAP')
