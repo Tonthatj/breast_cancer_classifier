@@ -15,7 +15,8 @@ def CLAHE(input_data_folder):
     files=[]
     for r, d, f in os.walk(input_data_folder):
         for file in f:
-            if f.endswith(".png"):
+            temp = file.split('.')
+            if temp[1] = "png":
                 files.append(file)
 
     Exams=[]
