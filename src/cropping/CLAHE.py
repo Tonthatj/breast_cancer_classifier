@@ -22,7 +22,7 @@ def CLAHE(input_data_folder):
     Exams=[]
     for i in range(0,len(files)):
         #print(files[i], input_data_folder)
-        image = np.array(imageio.imread(file_name))
+        image = np.array(imageio.imread(input_data_folder+'/'+files[i]))
         lab = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
         lab_planes = cv2.split(lab)
         clahe = cv2.createCLAHE(clipLimit=2.0,tileGridSize=(256,256))
@@ -34,8 +34,7 @@ def CLAHE(input_data_folder):
         #heatmap = cv2.applyColorMap(bgr, cv2.COLORMAP_HOT)
         heatmap = cv2.applyColorMap(bgr, cv2.COLORMAP_OCEAN)
         heatmap = np.array(heatmap)
-       
-        img.save(input_data_folder+'/'+files[i], bits=16)
+        imageio.imwrite(input_data_folder+'/'+files[i], image)
  
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Apply CLAHE and CMAP')
