@@ -15,11 +15,12 @@ def CLAHE(input_data_folder):
     files=[]
     for r, d, f in os.walk(input_data_folder):
         for file in f:
-            files.append(file)
+            if f.endswith(".png"):
+                files.append(file)
 
     Exams=[]
     for i in range(0,len(files)):
-        print(files[i], input_data_folder)
+        #print(files[i], input_data_folder)
         bgr = cv2.imread(input_data_folder+'/'+files[i])
         lab = cv2.cvtColor(bgr, cv2.COLOR_BGR2LAB)
         lab_planes = cv2.split(lab)
@@ -31,9 +32,9 @@ def CLAHE(input_data_folder):
   
         #heatmap = cv2.applyColorMap(bgr, cv2.COLORMAP_HOT)
         heatmap = cv2.applyColorMap(bgr, cv2.COLORMAP_OCEAN)
-        heatmap = np.array(heatmap)
+        heatmap = np.array(heatmap)cd
         img = Image.fromarray(heatmap, 'RGB')
-        img.save(input_data_folder+files[i])
+        img.save(input_data_folder+'/'+files[i])
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Apply CLAHE and CMAP')
