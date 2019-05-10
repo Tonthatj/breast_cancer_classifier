@@ -22,7 +22,8 @@ def CLAHE(input_data_folder):
     Exams=[]
     for i in range(0,len(files)):
         #print(files[i], input_data_folder)
-        image = np.array(imageio.imread(input_data_folder+'/'+files[i]))
+        image = cv2.imread(input_data_folder+'/'+files[i])
+        #image = np.array(imageio.imread(input_data_folder+'/'+files[i]))
         lab = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
         lab_planes = cv2.split(lab)
         clahe = cv2.createCLAHE(clipLimit=2.0,tileGridSize=(256,256))
