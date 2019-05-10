@@ -28,6 +28,10 @@ python src/cropping/crop_mammogram.py \
     --cropped-exam-list-path $CROPPED_EXAM_LIST_PATH  \
     --num-processes $NUM_PROCESSES
 
+echo 'Stage 1A: Apply Contrast Limited Adaptive Histogram Equalization'
+python src/cropping/CLAHE.py \
+    --input-data-folder $CROPPED_IMAGE_PATH
+
 echo 'Stage 2: Extract Centers'
 python src/optimal_centers/get_optimal_centers.py \
     --cropped-exam-list-path $CROPPED_EXAM_LIST_PATH \
