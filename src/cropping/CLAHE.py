@@ -9,6 +9,7 @@ from PIL import Image
 import numpy as np
 import cv2
 import imageio
+imageio.plugins.freeimage.download()
 
 def save_hdr(filename, img, dimension=None, gray=True):
     dims = len(img.shape)
