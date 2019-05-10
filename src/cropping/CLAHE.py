@@ -72,7 +72,7 @@ def CLAHE(input_data_folder):
         clahe = cv2.createCLAHE(clipLimit=2.0,tileGridSize=(256,256))
         lab_planes[0] = clahe.apply(lab_planes[0])
         lab = cv2.merge(lab_planes)
-        bgr = cv2.cvtColor(lab, cv2.COLOR_LAB2BGR)
+        bgr = cv2.cvtColor(lab, cv2.COLOR_BGR2GRAY)
         bgr = np.array(bgr)
         #heatmap = cv2.applyColorMap(bgr, cv2.COLORMAP_HOT)
         #heatmap = cv2.applyColorMap(bgr, cv2.COLORMAP_OCEAN)
