@@ -20,11 +20,16 @@ IMAGE_PREDICTIONS_PATH='sample_output/image_predictions.csv'
 IMAGEHEATMAPS_PREDICTIONS_PATH='sample_output/imageheatmaps_predictions.csv'
 export PYTHONPATH=$(pwd):$PYTHONPATH
 
-echo 'Stage 1A: Generate Pickle File'
+echo 'Stage 1A: Convert to INbreast dataset to pngs'
+python src/cropping/saveaspng.py \
+    --input-data-folder 'AllDICOMs'
+    --output-data-folder $DATA_FOLDER
+
+echo 'Stage 1B: Generate Pickle File'
 python src/cropping/CLAHE.py \
     --input-data-folder $DATA_FOLDER
 
-#echo 'Stage 1B: Apply Contrast Limited Adaptive Histogram Equalization'
+#echo 'Stage 1C: Apply Contrast Limited Adaptive Histogram Equalization'
 #python src/cropping/CLAHE.py \
 #    --input-data-folder $DATA_FOLDER
 
