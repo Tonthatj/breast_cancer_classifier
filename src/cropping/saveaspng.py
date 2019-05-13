@@ -45,7 +45,7 @@ def rename_files(input_data_folder):
         files.append(string)
     return files
 
-def read_dicom(dcmfile, options):
+def read_dicom(dcmfile):
     dcm = dicom.read_file(dcmfile, force=True)
     try:
         dcm.decompress()
@@ -64,20 +64,6 @@ def read_dicom(dcmfile, options):
     except AttributeError:
         b = 0
 
-    if options.offset is not None:
-        b = options.offset
-    if options.rescale is not None:
-        a = options.rescale
-        options.slope = True
-        
-    if options.raw or (a == 1 and b == 0):
-        pass
-    else:
-        data = np.clip(data, options.min - b, options.max - b)
-        if options.slope:
-            data = data.astype(np.float) * a
-            print('Warning: PNG and TIFF cannot handle floats! '
-                   ' You will lose precision with rounding!')
     return data
 
 def save_hdr(filename, img, dimension=None, gray=True):
@@ -152,10 +138,10 @@ def saveaspng(input_data_folder, output_data_folder):
     files = get_files(input_data_folder)
     newnames = rename_files(files)
     for i in range(0, len(files)):
-        data = read_dicom(input_data_folder + '/' + files[i], options)
+        data = read_dicom(input_data_folder + '/' + files[i])
         save_hdr(output_data_folder+ '/' + newnames[i], data.astype(np.uint16))
         print(str(i)+'/'+str(len(files)))
-    create_csv(files)
+    #create_csv(files)
     print('Created csv for comparisons!')
         
     
