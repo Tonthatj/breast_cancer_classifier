@@ -22,7 +22,7 @@ export PYTHONPATH=$(pwd):$PYTHONPATH
 
 echo 'Stage 1A: Convert to INbreast dataset to pngs'
 python src/cropping/saveaspng.py \
-    --input-data-folder 'AllDICOMs'
+    --input-data-folder 'AllDICOMs' \
     --output-data-folder $DATA_FOLDER
 
 echo 'Stage 1B: Generate Pickle File'
