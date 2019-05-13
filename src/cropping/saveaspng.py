@@ -37,7 +37,7 @@ def get_files(input_data_folder):
 def rename_files(input_data_folder):
     files=[]
     for i in range(0, len(input_data_folder)):
-        temp = input_data_folder.split('.')
+        temp = input_data_folder[i].split('.')
         parts = temp[0].split('_')
         if parts[4] == 'ML':
             parts[4] = 'MLO'
