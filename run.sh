@@ -20,10 +20,13 @@ IMAGE_PREDICTIONS_PATH='sample_output/image_predictions.csv'
 IMAGEHEATMAPS_PREDICTIONS_PATH='sample_output/imageheatmaps_predictions.csv'
 export PYTHONPATH=$(pwd):$PYTHONPATH
 
-
-echo 'Stage 1A: Apply Contrast Limited Adaptive Histogram Equalization'
+echo 'Stage 1A: Generate Pickle File'
 python src/cropping/CLAHE.py \
     --input-data-folder $DATA_FOLDER
+
+#echo 'Stage 1B: Apply Contrast Limited Adaptive Histogram Equalization'
+#python src/cropping/CLAHE.py \
+#    --input-data-folder $DATA_FOLDER
 
 echo 'Stage 1: Crop Mammograms'
 python src/cropping/crop_mammogram.py \
