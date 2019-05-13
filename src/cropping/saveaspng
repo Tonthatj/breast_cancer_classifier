@@ -152,8 +152,8 @@ def saveaspng(input_data_folder, output_data_folder):
     files = get_files(input_data_folder)
     newnames = rename_files(files)
     for i in range(0, len(files)):
-        data = read_dicom(input_data_folder + files[i], options)
-        save_hdr(newnames[i], data.astype(np.uint16))
+        data = read_dicom(input_data_folder + '/' + files[i], options)
+        save_hdr(output_data_folder+ '/' + newnames[i], data.astype(np.uint16))
         print(str(i)+'/'+str(len(files)))
     create_csv(files)
     print('Created csv for comparisons!')
