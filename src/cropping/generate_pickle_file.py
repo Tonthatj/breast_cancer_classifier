@@ -39,7 +39,6 @@ def get_dict_elems(files):
         count = 1
         for i in range(1, len(files)):
             parts = files[i].split('_')
-            print(first, parts[0])
             if first == parts[0]:
                 count +=1
             else:
@@ -69,20 +68,20 @@ def gen_dict(dict_elems, files, path):
                 temp = files[n+j].split('.')
                 parts = temp[0].split('_')
                 if lcc== 0 and parts[1] == "L" and parts[2] == "CC":
-                    temp_dict = {'L-CC' : temp}
+                    temp_dict = {'L-CC' : ["'" + temp + "'"]}
                     dicts.update(temp_dict)
                 if lmlo== 0 and parts[1] == "L" and parts[2] == "MLO":
-                    temp_dict = {'L-MLO' : temp}
+                    temp_dict = {'L-MLO' : ["'" + temp + "'"]}
                     dicts.update(temp_dict)
                 if rcc== 0 and parts[1] == "R" and parts[2] == "CC":
-                    temp_dict = {'R-CC' : temp}
+                    temp_dict = {'R-CC' : ["'" + temp + "'"]}
                     dicts.update(temp_dict)
                 if rmlo== 0 and parts[1] == "R" and parts[2] == "MLO":
-                    temp_dict = {'R-MLO' : temp}
+                    temp_dict = {'R-MLO' : ["'" + temp + "'"]}
                     dicts.update(temp_dict)
             dictionary.append(dicts)
         n = n + dict_elems[i]
-        print(str(i) + '/' + str(len(dict_elems)))
+        #print(str(i) + '/' + str(len(dict_elems)))
     return dictionary
    
 def gen_pickle(input_data_folder):    
