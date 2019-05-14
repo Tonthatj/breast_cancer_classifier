@@ -50,7 +50,7 @@ def get_dict_elems(files):
     return elems
 
 def save_pickle(dictionary, path):
-    string = path + "exam_list_before_cropping.pkl"
+    string = path + "exam_list_before_cropping2.pkl"
     pickle.dump(dictionary, open(string, "wb"))
     
 def gen_dict(dict_elems, files):
