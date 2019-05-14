@@ -7,7 +7,7 @@ HEATMAP_BATCH_SIZE=100
 GPU_NUMBER=0
 
 DATA_FOLDER='sample_data/images'
-INITIAL_EXAM_LIST_PATH='sample_data/exam_list_before_cropping2.pkl'
+INITIAL_EXAM_LIST_PATH='sample_data/exam_list_before_cropping.pkl'
 PATCH_MODEL_PATH='models/sample_patch_model.p'
 IMAGE_MODEL_PATH='models/sample_image_model.p'
 IMAGEHEATMAPS_MODEL_PATH='models/sample_imageheatmaps_model.p'
