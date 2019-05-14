@@ -11,7 +11,9 @@ import cv2
 import imageio
 import pickle
 
-
+def pickle_to_file(file_name, data, protocol = pickle.HIGHEST_PROTOCOL):
+    with open(file_name, 'wb') as handle:
+        pickle.dump(data, handle, protocol)
 
 def filepathprev(input_data_folder):
     path = input_data_folder.split('/')
@@ -53,9 +55,9 @@ def get_dict_elems(files):
 def save_pickle(dictionary, path):
     string = path + "exam_list_before_cropping2.pkl"
     for i in range(0,len(dictionary)):
-        pickle.dump(dictionary[i], open(string, "wb"))
+        pickle_to_file(string, dictionary[i], protocol = pickle.HIGHEST_PROTOCOL)
         #print(str(i) + '/' + str(len(dictionary)))
-    
+        
     
 def gen_dict(dict_elems, files, path):
     dictionary = []
