@@ -54,8 +54,7 @@ def get_dict_elems(files):
 
 def save_pickle(dictionary, path):
     string = path + "exam_list_before_cropping2.pkl"
-    for i in range(0,len(dictionary)):
-        pickle_to_file(string, dictionary[i], protocol = pickle.HIGHEST_PROTOCOL)
+    pickle_to_file(string, dictionary, protocol = pickle.HIGHEST_PROTOCOL)
         #print(str(i) + '/' + str(len(dictionary)))
         
     
