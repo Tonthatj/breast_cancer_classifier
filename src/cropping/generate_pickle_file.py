@@ -51,7 +51,9 @@ def get_dict_elems(files):
 
 def save_pickle(dictionary, path):
     string = path + "exam_list_before_cropping2.pkl"
-    pickle.dump(dictionary, open(string, "wb"))
+    for i in range(0,len(dictionary)):
+        pickle.dump(dictionary[i], open(string, "wb"))
+    
     
 def gen_dict(dict_elems, files, path):
     dictionary = []
