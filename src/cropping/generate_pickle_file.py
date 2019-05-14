@@ -18,7 +18,7 @@ def filepathprev(input_data_folder):
     pathlength = len(input_data_folder)
     string = ""
     for i in range(0, pathlength-1):
-        string = string + path[i] + '/')
+        string = string + path[i] + '/'
     return string
 
 def get_files(input_data_folder):
@@ -78,6 +78,7 @@ def gen_dict(dict_elems, files):
         if(dict_elems[i] >= 4):
             dictionary.append(dicts)                 
         n = n + dict_elems[i]
+        print(str(i) + '/' + str(len(dict_elems)))
     return dictionary
 
 def gen_pickle(input_data_folder):    
