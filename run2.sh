@@ -7,7 +7,7 @@ HEATMAP_BATCH_SIZE=100
 GPU_NUMBER=0
 
 DATA_FOLDER='sample_data/images'
-INITIAL_EXAM_LIST_PATH='sample_data/exam_list_before_cropping.pkl'
+INITIAL_EXAM_LIST_PATH='sample_data/exam_list_before_cropping2.pkl'
 PATCH_MODEL_PATH='models/sample_patch_model.p'
 IMAGE_MODEL_PATH='models/sample_image_model.p'
 IMAGEHEATMAPS_MODEL_PATH='models/sample_imageheatmaps_model.p'
@@ -25,9 +25,9 @@ export PYTHONPATH=$(pwd):$PYTHONPATH
 #    --input-data-folder 'AllDICOMs' \
 #    --output-data-folder $DATA_FOLDER
 
-#echo 'Stage 1B: Generate Pickle File'
-#python3 src/cropping/generate_pickle_file.py \
-#    --input-data-folder $DATA_FOLDER
+echo 'Stage 1B: Generate Pickle File'
+python3 src/cropping/generate_pickle_file.py \
+    --input-data-folder $DATA_FOLDER
 
 #echo 'Stage 1C: Apply Contrast Limited Adaptive Histogram Equalization'
 #python src/cropping/CLAHE.py \
