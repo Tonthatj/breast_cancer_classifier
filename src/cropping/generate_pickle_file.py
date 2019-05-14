@@ -54,7 +54,7 @@ def save_pickle(dictionary, path):
     pickle.dump(dictionary, open(string, "wb"))
     
 def gen_dict(dict_elems, files):
-    dictionary = {}
+    dictionary = []
     n = 0
     for i in range(0, len(dict_elems)):
         if(dict_elems[i] >= 4):
