@@ -72,15 +72,19 @@ def gen_dict(dict_elems, files, path):
                 if lcc== 0 and parts[1] == "L" and parts[2] == "CC":
                     temp_dict = {'L-CC' : [temp]}
                     dicts.update(temp_dict)
+                    lcc = 1
                 if lmlo== 0 and parts[1] == "L" and parts[2] == "MLO":
                     temp_dict = {'L-MLO' : [temp]}
                     dicts.update(temp_dict)
+                    lmlo = 1
                 if rcc== 0 and parts[1] == "R" and parts[2] == "CC":
                     temp_dict = {'R-CC' : [ temp ]}
                     dicts.update(temp_dict)
+                    rcc = 1
                 if rmlo== 0 and parts[1] == "R" and parts[2] == "MLO":
                     temp_dict = {'R-MLO' : [temp]}
                     dicts.update(temp_dict)
+                    rmlo = 1
             dictionary.append(dicts)
         n = n + dict_elems[i]
         #print(str(i) + '/' + str(len(dict_elems)))
