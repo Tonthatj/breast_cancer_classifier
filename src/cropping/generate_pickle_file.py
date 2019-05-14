@@ -68,16 +68,16 @@ def gen_dict(dict_elems, files, path):
                 temp = files[n+j].split('.')
                 parts = temp[0].split('_')
                 if lcc== 0 and parts[1] == "L" and parts[2] == "CC":
-                    temp_dict = {'L-CC' : ["'" + temp + "'"]}
+                    temp_dict = {'L-CC' : [temp]}
                     dicts.update(temp_dict)
                 if lmlo== 0 and parts[1] == "L" and parts[2] == "MLO":
-                    temp_dict = {'L-MLO' : ["'" + temp + "'"]}
+                    temp_dict = {'L-MLO' : [temp]}
                     dicts.update(temp_dict)
                 if rcc== 0 and parts[1] == "R" and parts[2] == "CC":
-                    temp_dict = {'R-CC' : ["'" + temp + "'"]}
+                    temp_dict = {'R-CC' : [ temp ]}
                     dicts.update(temp_dict)
                 if rmlo== 0 and parts[1] == "R" and parts[2] == "MLO":
-                    temp_dict = {'R-MLO' : ["'" + temp + "'"]}
+                    temp_dict = {'R-MLO' : [temp]}
                     dicts.update(temp_dict)
             dictionary.append(dicts)
         n = n + dict_elems[i]
