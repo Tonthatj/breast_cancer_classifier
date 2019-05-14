@@ -11,6 +11,10 @@ import cv2
 import imageio
 import pickle
 
+def savestudies(array):
+    X = pd.DataFrame(array);
+    X.toCSV('namesmatchstudy.csv', sep='\t')
+
 def pickle_to_file(file_name, data, protocol = pickle.HIGHEST_PROTOCOL):
     with open(file_name, 'wb') as handle:
         pickle.dump(data, handle, protocol)
@@ -35,6 +39,7 @@ def get_files(input_data_folder):
 
 def get_dict_elems(files):
     elems = []
+    names = []
     try:
         first_parts = files[0].split('_')
         first = first_parts[0]
@@ -45,11 +50,14 @@ def get_dict_elems(files):
                 count +=1
             else:
                 elems.append(count)
+                names.append(parts[0])
                 count = 1
                 first = parts[0]
         elems.append(count)
+        names.append(parts[0])
     except:
         print("No files in path!")
+    savestudies(names)
     return elems
 
 def save_pickle(dictionary, path):
@@ -95,6 +103,7 @@ def gen_pickle(input_data_folder):
     elem_dict = get_dict_elems(files)
     dictionary = gen_dict(elem_dict, files, newpath)
     save_pickle(dictionary, newpath)
+    savestudies()
     
     
 if __name__ == "__main__":
