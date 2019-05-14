@@ -12,8 +12,11 @@ import imageio
 import pickle
 
 def savestudies(array):
-    X = pd.DataFrame(array);
-    X.to_csv('namesmatchstudy.csv', sep='\t')
+    try:
+        X = pd.DataFrame(array);
+        X.to_csv('namesmatchstudy.csv', sep='\t')
+    except:
+        print('error')
 
 def pickle_to_file(file_name, data, protocol = pickle.HIGHEST_PROTOCOL):
     with open(file_name, 'wb') as handle:
