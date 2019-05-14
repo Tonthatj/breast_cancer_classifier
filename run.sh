@@ -26,7 +26,7 @@ python3 src/cropping/saveaspng.py \
     --output-data-folder $DATA_FOLDER
 
 echo 'Stage 1B: Generate Pickle File'
-python3 src/cropping/CLAHE.py \
+python3 src/cropping/generate_pickle_file.py \
     --input-data-folder $DATA_FOLDER
 
 #echo 'Stage 1C: Apply Contrast Limited Adaptive Histogram Equalization'
