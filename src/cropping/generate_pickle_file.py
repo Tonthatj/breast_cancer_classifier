@@ -77,7 +77,7 @@ def gen_dict(dict_elems, files, path):
                     dicts.update(temp_dict)
         if(dict_elems[i] >= 4):
             dictionary.append(dicts)
-            save_pickle(dicts, newpath)
+            save_pickle(dicts, path)
         n = n + dict_elems[i]
         print(str(i) + '/' + str(len(dict_elems)))
    
