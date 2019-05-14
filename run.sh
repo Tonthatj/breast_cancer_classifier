@@ -20,10 +20,10 @@ IMAGE_PREDICTIONS_PATH='sample_output/image_predictions.csv'
 IMAGEHEATMAPS_PREDICTIONS_PATH='sample_output/imageheatmaps_predictions.csv'
 export PYTHONPATH=$(pwd):$PYTHONPATH
 
-echo 'Stage 1A: Convert to INbreast dataset to pngs'
-python3 src/cropping/saveaspng.py \
-    --input-data-folder 'AllDICOMs' \
-    --output-data-folder $DATA_FOLDER
+#echo 'Stage 1A: Convert to INbreast dataset to pngs'
+#python3 src/cropping/saveaspng.py \
+#    --input-data-folder 'AllDICOMs' \
+#    --output-data-folder $DATA_FOLDER
 
 echo 'Stage 1B: Generate Pickle File'
 python3 src/cropping/generate_pickle_file.py \
