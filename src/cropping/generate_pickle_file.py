@@ -86,7 +86,7 @@ def gen_dict(dict_elems, files, path):
                     rmlo = 1
             dictionary.append(dicts)
         n = n + dict_elems[i]
-        #print(str(i) + '/' + str(len(dict_elems)))
+        print(str(i) + '/' + str(len(dict_elems)))
     return dictionary
    
 def gen_pickle(input_data_folder):    
