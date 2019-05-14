@@ -80,6 +80,7 @@ def gen_dict(dict_elems, files, path):
             dictionary.append(dicts)
         n = n + dict_elems[i]
         print(str(i) + '/' + str(len(dict_elems)))
+    return dictionary
    
 def gen_pickle(input_data_folder):    
     newpath = filepathprev(input_data_folder)
