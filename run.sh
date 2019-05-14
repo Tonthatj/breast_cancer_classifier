@@ -13,7 +13,7 @@ IMAGE_MODEL_PATH='models/sample_image_model.p'
 IMAGEHEATMAPS_MODEL_PATH='models/sample_imageheatmaps_model.p'
 
 CROPPED_IMAGE_PATH='sample_output/cropped_images'
-CROPPED_EXAM_LIST_PATH='sample_output/cropped_images/cropped_exam_list.pkl'
+CROPPED_EXAM_LIST_PATH='sample_output/cropped_images/cropped_exam_list2.pkl'
 EXAM_LIST_PATH='sample_output/data.pkl'
 HEATMAPS_PATH='sample_output/heatmaps'
 IMAGE_PREDICTIONS_PATH='sample_output/image_predictions.csv'
