@@ -18,7 +18,7 @@ def filepathprev(input_data_folder):
     pathlength = len(input_data_folder)
     string = ""
     for i in range(0, pathlength-1):
-        string.append(path[i] + '/')
+        string = string + path[i] + '/')
     return string
 
 def get_files(input_data_folder):
