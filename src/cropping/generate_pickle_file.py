@@ -13,7 +13,7 @@ import pickle
 
 def savestudies(array):
     X = pd.DataFrame(array);
-    X.toCSV('namesmatchstudy.csv', sep='\t')
+    X.to_csv('namesmatchstudy.csv', sep='\t')
 
 def pickle_to_file(file_name, data, protocol = pickle.HIGHEST_PROTOCOL):
     with open(file_name, 'wb') as handle:
