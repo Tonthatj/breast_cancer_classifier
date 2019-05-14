@@ -38,6 +38,7 @@ def get_dict_elems(files):
         count = 1
         for i in range(1, len(files)):
             parts = files[i].split('_')
+            print(first, parts[0])
             if first == parts[0]:
                 count +=1
             else:
@@ -53,6 +54,7 @@ def save_pickle(dictionary, path):
     string = path + "exam_list_before_cropping2.pkl"
     for i in range(0,len(dictionary)):
         pickle.dump(dictionary[i], open(string, "wb"))
+        print(str(i) + '/' + str(len(dictionary)))
     
     
 def gen_dict(dict_elems, files, path):
