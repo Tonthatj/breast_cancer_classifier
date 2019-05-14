@@ -54,7 +54,7 @@ def save_pickle(dictionary, path):
     string = path + "exam_list_before_cropping2.pkl"
     for i in range(0,len(dictionary)):
         pickle.dump(dictionary[i], open(string, "wb"))
-        print(str(i) + '/' + str(len(dictionary)))
+        #print(str(i) + '/' + str(len(dictionary)))
     
     
 def gen_dict(dict_elems, files, path):
