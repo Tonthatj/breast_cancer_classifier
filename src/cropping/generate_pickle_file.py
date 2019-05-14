@@ -30,10 +30,10 @@ def get_files(input_data_folder):
             temp = file.split('.')
             if temp[1] == "png":
                 files.append(file)
+    files= sorted(files)
     return files
 
 def get_dict_elems(files):
-    files= sorted(files)
     elems = []
     try:
         first_parts = files[0].split('_')
