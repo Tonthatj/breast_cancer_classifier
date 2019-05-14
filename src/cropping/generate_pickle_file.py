@@ -84,7 +84,7 @@ def gen_pickle(input_data_folder):
     files = get_files(input_data_folder)
     elem_dict = get_dict_elems(files)
     dictionary = gen_dict(elem_dict, files, newpath)
-    save_pickle(dictionary,newpath
+    save_pickle(dictionary, newpath)
     
     
 if __name__ == "__main__":
