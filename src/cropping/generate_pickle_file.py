@@ -51,7 +51,7 @@ def get_dict_elems(files):
 
 def save_pickle(dictionary, path):
     string = path + "exam_list_before_cropping2.pkl"
-    pickle.dump(newdict, open(string, "wb"))
+    pickle.dump(dictionary, open(string, "wb"))
     
 def gen_dict(dict_elems, files, path):
     dictionary = []
@@ -75,19 +75,16 @@ def gen_dict(dict_elems, files, path):
                 if rmlo== 0 and parts[1] == "R" and parts[2] == "MLO":
                     temp_dict = {'R-MLO' : temp}
                     dicts.update(temp_dict)
-        if(dict_elems[i] >= 4):
             dictionary.append(dicts)
-            save_pickle(dicts, path)
         n = n + dict_elems[i]
         print(str(i) + '/' + str(len(dict_elems)))
    
-
 def gen_pickle(input_data_folder):    
     newpath = filepathprev(input_data_folder)
     files = get_files(input_data_folder)
     elem_dict = get_dict_elems(files)
-    gen_dict(elem_dict, files, newpath)
-    
+    dictionary = gen_dict(elem_dict, files, newpath)
+    save_pickle(dictionary,newpath
     
     
 if __name__ == "__main__":
