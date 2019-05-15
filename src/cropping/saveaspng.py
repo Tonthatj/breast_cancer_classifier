@@ -15,36 +15,6 @@ import tifffile as tiff
 import sys
 
 
-def filepathprev(input_data_folder):
-    path = input_data_folder.split('/')
-    pathlength = len(input_data_folder)
-    string = ""
-    for i in range(0, pathlength-1):
-        string.append(path[i] + '/')
-    return string
-
-
-
-def get_files(input_data_folder):
-    files=[]
-    for r, d, f in os.walk(input_data_folder):
-        for file in f:
-            temp = file.split('.')
-            if temp[1] == "dcm":
-                files.append(file)
-    return files
-
-def rename_files(input_data_folder):
-    files=[]
-    for i in range(0, len(input_data_folder)):
-        temp = input_data_folder[i].split('.')
-        parts = temp[0].split('_')
-        if parts[4] == 'ML':
-            parts[4] = 'MLO'
-        string = parts[1] + '_' + parts[3] + '_' + parts[4] + '.png'
-        files.append(string)
-    return files
-
 def read_dicom(dcmfile):
     dcm = dicom.read_file(dcmfile, force=True)
     try:
@@ -65,6 +35,7 @@ def read_dicom(dcmfile):
         b = 0
 
     return data
+
 
 def save_hdr(filename, img, dimension=None, gray=True):
     dims = len(img.shape)
@@ -112,27 +83,61 @@ def save_hdr(filename, img, dimension=None, gray=True):
             sys.exit(1)
    
 def create_csv(files):
-    data = pd.read_csv('INbreast.csv')
-    sort_file = data.sort_values('File Name')
-    X = sort_file.iloc[1:, :].values
-    patient_names =[]
-    file_names = []
-    for i in range(0,len(files)):
-        temp = files[i].split('.')
+    try:
+        data = pd.read_csv('INbreast.csv')
+        sort_file = data.sort_values('File Name')
+        X = sort_file.iloc[1:, :].values
+        patient_names =[]
+        file_names = []
+        for i in range(0,len(files)):
+            temp = files[i].split('.')
+            parts = temp[0].split('_')
+            file_names.append(parts[0])
+            patient_names.append(parts[1])
+        data = {'filenames': file_names, 'patients': patient_names}
+        df = pd.DataFrame(data, columns=['File Name','PID'])
+        sort_file2 = df.sort_values('File Name')
+        Y = sort_file2.iloc[1:, :].values
+        X = np.array(X)
+        Y = np.array(Y)
+        for i in range(0, len(Y)):
+            X[i,0] = Y[i,1]
+        X = pd.DataFrame(X);
+        X.to_csv('patients_files.csv', sep='\t')
+        print("Successfully created csv containing filenames with corresponding patients")
+    except:
+        print("failed to create csv containing filenames with corresponding patients")
+
+def filepathprev(input_data_folder):
+    path = input_data_folder.split('/')
+    pathlength = len(input_data_folder)
+    string = ""
+    for i in range(0, pathlength-1):
+        string.append(path[i] + '/')
+    return string
+
+def get_files(input_data_folder):
+    files=[]
+    for r, d, f in os.walk(input_data_folder):
+        for file in f:
+            temp = file.split('.')
+            if temp[1] == "dcm":
+                files.append(file)
+    files = sorted(files)
+    return files
+
+
+def rename_files(input_data_folder):
+    files=[]
+    for i in range(0, len(input_data_folder)):
+        temp = input_data_folder[i].split('.')
         parts = temp[0].split('_')
-        file_names.append(parts[0])
-        patient_names.append(parts[1])
-    data = {'filenames': file_names, 'patients': patient_names}
-    df = pd.DataFrame(data, columns=['File Name','PID'])
-    sort_file2 = df.sort_values('File Name')
-    Y = sort_file2.iloc[1:, :].values
-    X = np.array(X)
-    Y = np.array(Y)
-    for i in range(0, len(Y)):
-        X[i,0] = Y[i,1]
-    X = pd.DataFrame(X);
-    X.toCSV('Compare.csv', sep='\t')
-        
+        if parts[4] == 'ML':
+            parts[4] = 'MLO'
+        string = parts[1] + '_' + parts[3] + '_' + parts[4] + '.png'
+        files.append(string)
+    return files
+ 
 
 def saveaspng(input_data_folder, output_data_folder):    
     files = get_files(input_data_folder)
@@ -141,10 +146,9 @@ def saveaspng(input_data_folder, output_data_folder):
         data = read_dicom(input_data_folder + '/' + files[i])
         save_hdr(output_data_folder+ '/' + newnames[i], data.astype(np.uint16))
         print(str(i)+'/'+str(len(files)))
-    #create_csv(files)
-    print('Created csv for comparisons!')
-        
+    create_csv(files)
     
+            
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Apply CLAHE and CMAP')
     parser.add_argument('--input-data-folder', required=True)
