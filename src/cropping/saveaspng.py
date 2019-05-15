@@ -98,8 +98,8 @@ def create_csv(files):
             file_names.append(parts[0])
             patient_names.append(parts[1])
         data = {'filenames': file_names, 'patients': patient_names}
-        df = pd.DataFrame(data, columns=['File Name','PID'])
-        sort_file2 = df.sort_values('File Name')
+        df = pd.DataFrame(data)
+        sort_file2 = df.sort_values('filenames')
         Y = sort_file2.iloc[1:, :].values
         X = np.array(X)
         Y = np.array(Y)
