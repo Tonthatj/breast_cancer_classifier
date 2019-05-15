@@ -86,6 +86,9 @@ def create_csv(files):
     try:
         data = pd.read_csv('INbreast.csv')
         sort_file = data.sort_values('File Name')
+    except:
+        print("cannot open or sort")
+    try:
         X = sort_file.iloc[1:, :].values
         patient_names =[]
         file_names = []
