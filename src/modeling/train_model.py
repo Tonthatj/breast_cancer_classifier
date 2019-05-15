@@ -86,13 +86,82 @@ def run_model(model, exam_list, parameters):
                     for view in VIEWS.LIST
                 }
                 output = model(tensor_batch)
-                batch_predictions = compute_batch_predictions(output)
-                pred_df = pd.DataFrame({k: v[:, 1] for k, v in batch_predictions.items()})
-                pred_df.columns.names = ["label", "view_angle"]
-                predictions = pred_df.T.reset_index().groupby("label").mean().T.values
-                predictions_for_datum.append(predictions)
-            predictions_ls.append(np.mean(np.concatenate(predictions_for_datum, axis=0), axis=0))
-    return np.array(predictions_ls) 
+                
+    
+
+def train_model(model, exam_list, parameters):
+    input_channels = 3 if parameters["use_heatmaps"] else 1
+    model = models.SplitBreastModel(input_channels)
+    model.load_state_dict(torch.load(model_path)["model"])
+    exam_list = pickling.unpickle_from_file(data_path)
+    
+    if (parameters["device_type"] == "gpu") and torch.has_cudnn:
+
+        device = torch.device("cuda:{}".format(parameters["gpu_number"]))
+    else:
+        device = torch.device("cpu")
+    model = model.to(device)
+    model.eval()
+    random_number_generator = np.random.RandomState(parameters["seed"])
+    image_extension = ".hdf5" if parameters["use_hdf5"] else ".png"
+    
+    with torch.no_grad():
+        predictions_ls = []
+        for datum in tqdm.tqdm(exam_list):
+            predictions_for_datum = []
+            loaded_image_dict = {view: [] for view in VIEWS.LIST}
+            loaded_heatmaps_dict = {view: [] for view in VIEWS.LIST}
+            for view in VIEWS.LIST:
+                for short_file_path in datum[view]:
+                    loaded_image = loading.load_image(
+                        image_path=os.path.join(parameters["image_path"], short_file_path + image_extension),
+                        view=view,
+                        horizontal_flip=datum["horizontal_flip"],
+                    )
+                    if parameters["use_heatmaps"]:
+                        loaded_heatmaps = loading.load_heatmaps(
+                            benign_heatmap_path=os.path.join(parameters["heatmaps_path"], "heatmap_benign",
+                                                             short_file_path + ".hdf5"),
+                            malignant_heatmap_path=os.path.join(parameters["heatmaps_path"], "heatmap_malignant",
+                                                                short_file_path + ".hdf5"),
+                            view=view,
+                            horizontal_flip=datum["horizontal_flip"],
+                        )
+                    else:
+                        loaded_heatmaps = None
+                    loaded_image_dict[view].append(loaded_image)
+                    loaded_heatmaps_dict[view].append(loaded_heatmaps)
+            for data_batch in tools.partition_batch(range(parameters["num_epochs"]), parameters["batch_size"]):
+                batch_dict = {view: [] for view in VIEWS.LIST}
+                for _ in data_batch:
+                    for view in VIEWS.LIST:
+                        image_index = 0
+                        if parameters["augmentation"]:
+                            image_index = random_number_generator.randint(low=0, high=len(datum[view]))
+                        cropped_image, cropped_heatmaps = loading.augment_and_normalize_image(
+                            image=loaded_image_dict[view][image_index], 
+                            auxiliary_image=loaded_heatmaps_dict[view][image_index],
+                            view=view,
+                            best_center=datum["best_center"][view][image_index],
+                            random_number_generator=random_number_generator,
+                            augmentation=parameters["augmentation"],
+                            max_crop_noise=parameters["max_crop_noise"],
+                            max_crop_size_noise=parameters["max_crop_size_noise"],
+                        )
+                        if loaded_heatmaps_dict[view][image_index] is None:
+                            batch_dict[view].append(cropped_image[:, :, np.newaxis])
+                        else:
+                            batch_dict[view].append(np.concatenate([
+                                cropped_image[:, :, np.newaxis],
+                                cropped_heatmaps,
+                            ], axis=2))
+
+                tensor_batch = {
+                    view: torch.tensor(np.stack(batch_dict[view])).permute(0, 3, 1, 2).to(device)
+                    for view in VIEWS.LIST
+                }
+                output = model(tensor_batch)
+
 
 def compute_batch_predictions(y_hat):
     """
@@ -121,7 +190,7 @@ def load_run_save(model_path, data_path, output_path, parameters):
     # Take the positive prediction
     df = pd.DataFrame(predictions, columns=LABELS.LIST)
     df.to_csv(output_path, index=False, float_format='%.4f')
-
+    
 
 def main():
     parser = argparse.ArgumentParser(description='Run image-only model or image+heatmap model')
