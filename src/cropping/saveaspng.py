@@ -141,7 +141,9 @@ def rename_files(input_data_folder):
 
 def saveaspng(input_data_folder, output_data_folder):    
     files = get_files(input_data_folder)
+    print(len(files))
     newnames = rename_files(files)
+    print(len(newnames))
     for i in range(0, len(files)):
         data = read_dicom(input_data_folder + '/' + files[i])
         save_hdr(output_data_folder+ '/' + newnames[i], data.astype(np.uint16))
