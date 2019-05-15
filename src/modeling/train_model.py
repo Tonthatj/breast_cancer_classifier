@@ -26,7 +26,7 @@ def run_model(model, exam_list, parameters):
     else:
         device = torch.device("cpu")
     model = model.to(device)
-    model.eval()
+    model.train()
     random_number_generator = np.random.RandomState(parameters["seed"])
     image_extension = ".hdf5" if parameters["use_hdf5"] else ".png"
     
